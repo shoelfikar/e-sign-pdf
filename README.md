@@ -158,16 +158,6 @@ e-sign-pdf/
 └── jsconfig.json          # JavaScript configuration
 ```
 
-Lihat [FOLDER_STRUCTURE.md](FOLDER_STRUCTURE.md) untuk detail lengkap struktur komponen.
-
-## Documentation
-
-Dokumentasi lengkap tersedia untuk membantu Anda memahami arsitektur dan struktur project:
-
-- **[PROJECT_BLUEPRINT.md](PROJECT_BLUEPRINT.md)** - Arsitektur lengkap, design decisions, dan teknologi yang digunakan
-- **[FOLDER_STRUCTURE.md](FOLDER_STRUCTURE.md)** - Detail struktur folder dan component hierarchy
-- **[DEPENDENCIES.md](DEPENDENCIES.md)** - Dokumentasi lengkap semua dependencies dan kegunaannya
-
 ## Development Roadmap
 
 ### ✅ Phase 1 - MVP (Completed)
@@ -187,29 +177,6 @@ Dokumentasi lengkap tersedia untuk membantu Anda memahami arsitektur dan struktu
 - [x] QR Code signature generator
 - [x] Real-time preview untuk semua signature types
 
-### 🚧 Phase 3 - Advanced Features (In Progress)
-- [ ] Undo/Redo functionality untuk signature management
-- [ ] Save draft ke local storage
-- [ ] Export settings & preferences
-- [ ] Signature templates (save & reuse)
-- [ ] Batch signing untuk multiple PDFs
-- [ ] Digital certificate integration
-
-### 📋 Phase 4 - Professional Features (Planned)
-- [ ] User authentication & profiles
-- [ ] Cloud storage integration
-- [ ] Signature verification & audit trail
-- [ ] Team collaboration features
-- [ ] API untuk integrasi dengan system lain
-- [ ] Mobile app (React Native)
-
-### 🎨 Phase 5 - UX Improvements (Planned)
-- [ ] Dark mode support
-- [ ] Keyboard shortcuts
-- [ ] Accessibility improvements (WCAG 2.1)
-- [ ] Internationalization (i18n) - Multi-language
-- [ ] Progressive Web App (PWA)
-- [ ] Offline mode support
 
 ## Usage Guide
 
@@ -536,11 +503,11 @@ Copyright (c) 2025 E-Sign PDF Contributors
 
 ## Contact & Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/e-sign-pdf/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/e-sign-pdf/discussions)
-- **Email**: your.email@example.com
+- **Issues**: [GitHub Issues](https://github.com/shoelfikar/e-sign-pdf/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/shoelfikar/e-sign-pdf/discussions)
+- **Email**: sulfikardi25@gmail.com
 
-Project Link: [https://github.com/yourusername/e-sign-pdf](https://github.com/yourusername/e-sign-pdf)
+Project Link: [https://github.com/shoelfikar/e-sign-pdf](https://github.com/shoelfikar/e-sign-pdf)
 
 ## Acknowledgments
 
@@ -576,7 +543,7 @@ Fitur ini masih dalam roadmap (Phase 3). Saat ini hanya support satu PDF per ses
 Tidak ada hard limit, tapi direkomendasikan < 10MB untuk performa optimal.
 
 ### Bagaimana cara melaporkan bug?
-Silakan buat issue di [GitHub Issues](https://github.com/yourusername/e-sign-pdf/issues) dengan detail lengkap.
+Silakan buat issue di [GitHub Issues](https://github.com/shoelfikar/e-sign-pdf/issues) dengan detail lengkap.
 
 ---
 
