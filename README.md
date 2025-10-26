@@ -78,7 +78,7 @@ Aplikasi web modern untuk menambahkan tanda tangan digital pada file PDF dengan 
 
 ```bash
 # Clone repository
-git clone <your-repo-url>
+git clone https://github.com/shoelfikar/e-sign-pdf
 cd e-sign-pdf
 
 # Install dependencies
