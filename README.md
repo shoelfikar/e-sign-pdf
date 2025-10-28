@@ -1,6 +1,6 @@
 # E-Sign PDF - Web Application
 
-Aplikasi web modern untuk menambahkan tanda tangan digital pada file PDF dengan berbagai metode signing yang fleksibel. Semua proses dilakukan 100% di browser untuk menjaga privasi dan keamanan dokumen Anda.
+A modern web application for adding digital signatures to PDF files with various flexible signing methods. All processing is done 100% in the browser to protect your document privacy and security.
 
 ## Screenshots
 
@@ -13,39 +13,49 @@ Aplikasi web modern untuk menambahkan tanda tangan digital pada file PDF dengan 
 ## Features
 
 ### Core Features
-- Upload file PDF dengan drag & drop atau file picker
-- Multi-page PDF navigation dengan kontrol halaman lengkap
+- **User Authentication** - Secure login system to protect your workspace
+- **Dark Mode** - Full dark mode support with automatic theme detection
+- Upload PDF files with drag & drop or file picker
+- Multi-page PDF navigation with complete page controls
 - Zoom in/out PDF (50% - 300%)
-- Download PDF yang sudah ditandatangani
-- Support multiple signatures per dokumen
-- Support multiple signatures per halaman
+- Download signed PDF
+- Support multiple signatures per document
+- Support multiple signatures per page
 
-### Metode Pembuatan Tanda Tangan
-1. **Drawing Manual** - Gambar tanda tangan dengan mouse/touch menggunakan canvas
-2. **Text-based Signature** - Ketik nama dengan berbagai pilihan font signature yang elegant
-3. **Image Upload** - Upload gambar tanda tangan (PNG, JPG, JPEG)
-4. **QR Code** - Generate QR Code untuk verifikasi digital dengan customizable options
+### Signature Creation Methods
+1. **Manual Drawing** - Draw signatures with mouse/touch using canvas
+2. **Text-based Signature** - Type name with various elegant signature font options
+3. **Image Upload** - Upload signature images (PNG, JPG, JPEG)
+4. **QR Code** - Generate QR Code for digital verification with customizable options
 
 ### Advanced Signature Features
-- Drag & drop tanda tangan ke posisi mana saja di PDF
-- Resize tanda tangan dengan react-rnd (resizable & draggable)
-- Delete signature individual
-- Preview real-time sebelum menambahkan ke dokumen
-- Tanda tangan ter-assign per halaman (multi-page support)
+- Drag & drop signatures to any position on PDF
+- Resize signatures with react-rnd (resizable & draggable)
+- Delete individual signatures
+- Real-time preview before adding to document
+- Signatures assigned per page (multi-page support)
 
 ### QR Code Features
-- Customizable QR Code content (URL, text, email, phone, dll)
+- Customizable QR Code content (URL, text, email, phone, etc.)
 - Adjustable size (100px - 300px)
 - Error correction levels (L, M, Q, H)
-- Custom colors untuk foreground dan background
-- Template cepat untuk use case umum
-- Live preview dengan scan test
+- Custom colors for foreground and background
+- Quick templates for common use cases
+- Live preview with scan test
+
+### UI/UX Features
+- **Dark Mode Toggle** - Switch between light and dark themes
+- **Persistent Theme** - Theme preference saved in localStorage
+- **System Theme Detection** - Automatically detects system color scheme preference
+- **Responsive Design** - Works seamlessly on desktop and mobile devices
+- **User Profile Menu** - Quick access to profile, settings, and logout
 
 ## Tech Stack
 
 ### Frontend Framework
-- **Next.js 14** - React framework dengan App Router
+- **Next.js 14** - React framework with App Router
 - **React 18** - UI library
+- **React Context API** - State management for theme and authentication
 
 ### PDF Processing
 - **react-pdf** (pdfjs-dist 3.11.174) - PDF rendering dan display
@@ -65,14 +75,14 @@ Aplikasi web modern untuk menambahkan tanda tangan digital pada file PDF dengan 
 
 ### Utilities
 - **file-saver** - File download handling
-- **uuid** - Unique ID generation untuk signatures
+- **uuid** - Unique ID generation for signatures
 - **zustand** - Lightweight state management (if needed)
 
 ## Quick Start
 
 ### Prerequisites
-- **Node.js** 18 atau lebih tinggi
-- **npm** atau **yarn** atau **pnpm**
+- **Node.js** 18 or higher
+- **npm** or **yarn** or **pnpm**
 
 ### Installation
 
@@ -83,40 +93,40 @@ cd e-sign-pdf
 
 # Install dependencies
 npm install
-# atau
+# or
 yarn install
-# atau
+# or
 pnpm install
 
 # Start development server
 npm run dev
-# atau
+# or
 yarn dev
-# atau
+# or
 pnpm dev
 ```
 
-Aplikasi akan berjalan di `http://localhost:3000`
+The application will run at `http://localhost:3000`
 
 ### Build for Production
 
 ```bash
 npm run build
-# atau
+# or
 yarn build
-# atau
+# or
 pnpm build
 ```
 
-Output akan ada di folder `.next/`
+Output will be in the `.next/` folder
 
 ### Start Production Server
 
 ```bash
 npm run start
-# atau
+# or
 yarn start
-# atau
+# or
 pnpm start
 ```
 
@@ -124,7 +134,7 @@ pnpm start
 
 ```bash
 npm run preview
-# atau
+# or
 npm run start
 ```
 
@@ -168,102 +178,126 @@ e-sign-pdf/
 - [x] Download PDF with signature
 
 ### ✅ Phase 2 - Enhanced Features (Completed)
-- [x] Multi-page PDF navigation dengan kontrol lengkap
-- [x] Text-based signature dengan multiple fonts
+- [x] Multi-page PDF navigation with complete controls
+- [x] Text-based signature with multiple fonts
 - [x] Image upload signature (PNG, JPG, JPEG)
-- [x] Resize & drag signature dengan react-rnd
+- [x] Resize & drag signature with react-rnd
 - [x] Multiple signatures per document & per page
 - [x] Zoom in/out PDF (50% - 300%)
 - [x] QR Code signature generator
-- [x] Real-time preview untuk semua signature types
+- [x] Real-time preview for all signature types
+
+### ✅ Phase 3 - Authentication & Theme (Completed)
+- [x] User authentication system with login page
+- [x] Protected routes for secure access
+- [x] Dark mode implementation with theme toggle
+- [x] Persistent theme preferences
+- [x] System theme detection
+- [x] User profile menu with logout functionality
 
 
 ## Usage Guide
 
-### 1. Upload PDF
-1. Buka aplikasi di browser
-2. Klik area upload atau **drag & drop** file PDF ke area upload
-3. File PDF akan otomatis di-render di viewer
-4. Tunggu hingga loading selesai
+### 1. Login
+1. Navigate to the login page at `/login`
+2. Enter your email and password (minimum 6 characters)
+3. For demo purposes, you can use any email and password
+4. Click "Sign in" to access the application
+
+**Demo Credentials:**
+- Email: demo@example.com
+- Password: demo123
+
+### 2. Upload PDF
+1. After logging in, you'll be redirected to the main application
+2. Open the application in your browser
+2. Click the upload area or **drag & drop** a PDF file into the upload area
+3. The PDF file will automatically render in the viewer
+4. Wait for the loading to complete
 
 **Tips:**
-- Ukuran file maksimal yang direkomendasikan: 10MB
-- Format yang didukung: PDF (.pdf)
-- File diproses 100% di browser, tidak diupload ke server
+- Recommended maximum file size: 10MB
+- Supported format: PDF (.pdf)
+- Files are processed 100% in the browser, not uploaded to any server
 
-### 2. Navigate PDF (Multi-page)
-Gunakan kontrol navigasi yang tersedia:
-- **First/Last Page**: Langsung ke halaman pertama/terakhir
-- **Previous/Next**: Navigasi halaman per halaman
-- **Page Counter**: Menampilkan halaman saat ini dari total halaman
-- **Zoom Controls**: Zoom in/out (50% - 300%), atau reset ke 100%
+### 3. Toggle Dark Mode
+- Click the moon/sun icon in the header to toggle between light and dark modes
+- Your preference will be saved automatically
+- The app respects your system's color scheme preference by default
 
-### 3. Create Signature
-1. Klik tombol **"Buat Tanda Tangan"**
-2. Pilih salah satu dari 4 metode:
+### 4. Navigate PDF (Multi-page)
+Use the available navigation controls:
+- **First/Last Page**: Jump directly to the first/last page
+- **Previous/Next**: Navigate page by page
+- **Page Counter**: Displays current page of total pages
+- **Zoom Controls**: Zoom in/out (50% - 300%), or reset to 100%
 
-#### A. Gambar (Draw)
-- Gambar tanda tangan menggunakan mouse atau touch
-- Klik **"Clear"** untuk menghapus dan gambar ulang
-- Pilih warna dan ketebalan garis
-- Preview real-time di canvas
+### 5. Create Signature
+1. Click the **"Create Signature"** button
+2. Choose one of 4 methods:
 
-#### B. Ketik (Text)
-- Ketik nama Anda di input field
-- Pilih dari berbagai font signature yang tersedia
-- Pilih ukuran font
-- Pilih warna teks
-- Preview otomatis muncul
+#### A. Draw
+- Draw your signature using mouse or touch
+- Click **"Clear"** to erase and redraw
+- Choose line color and thickness
+- Real-time preview on canvas
+
+#### B. Text
+- Type your name in the input field
+- Choose from various available signature fonts
+- Select font size
+- Choose text color
+- Preview appears automatically
 
 #### C. Upload (Image)
-- Klik **"Upload Image"** atau drag & drop
-- Pilih file gambar (PNG, JPG, JPEG)
-- Gambar akan otomatis di-crop dan di-optimize
-- Preview langsung ditampilkan
+- Click **"Upload Image"** or drag & drop
+- Select an image file (PNG, JPG, JPEG)
+- Image will be automatically cropped and optimized
+- Preview is displayed immediately
 
 #### D. QR Code
-- Masukkan konten QR Code (URL, text, email, phone, dll)
-- Atau gunakan template cepat yang tersedia
-- Atur ukuran QR Code (100px - 300px)
-- Pilih error correction level (L, M, Q, H)
-- Customize warna foreground dan background
-- Toggle margin putih di sekitar QR Code
-- Preview QR Code langsung bisa di-scan
+- Enter QR Code content (URL, text, email, phone, etc.)
+- Or use available quick templates
+- Set QR Code size (100px - 300px)
+- Choose error correction level (L, M, Q, H)
+- Customize foreground and background colors
+- Toggle white margin around QR Code
+- QR Code preview can be scanned immediately
 
-3. Klik **"Gunakan Tanda Tangan"** untuk menambahkan ke dokumen
-4. Signature akan muncul di halaman PDF yang sedang aktif
+3. Click **"Use Signature"** to add it to the document
+4. The signature will appear on the currently active PDF page
 
-### 4. Position & Resize Signature
-Setelah signature ditambahkan:
-- **Drag**: Klik dan drag signature ke posisi yang diinginkan
-- **Resize**: Drag corner handles untuk mengubah ukuran
-- **Delete**: Klik icon delete (🗑️) di pojok signature
-- **Multi-signature**: Ulangi proses untuk menambah signature lain
+### 6. Position & Resize Signature
+After adding a signature:
+- **Drag**: Click and drag the signature to the desired position
+- **Resize**: Drag corner handles to change size
+- **Delete**: Click the delete icon (🗑️) in the signature corner
+- **Multi-signature**: Repeat the process to add more signatures
 
 **Tips:**
-- Signature ter-assign ke halaman tertentu
-- Bisa menambahkan multiple signatures di satu halaman
-- Bisa menambahkan signature berbeda di setiap halaman
-- Position dan size disimpan per signature
+- Signatures are assigned to specific pages
+- You can add multiple signatures on one page
+- You can add different signatures on each page
+- Position and size are saved per signature
 
-### 5. Download PDF
-1. Pastikan semua signature sudah diposisikan dengan benar
-2. Klik tombol **"Download PDF"**
-3. Aplikasi akan:
-   - Memproses semua signatures
-   - Embed signatures ke dalam PDF
-   - Generate file baru dengan nama `[original-name]-signed.pdf`
-4. File otomatis terdownload ke folder Downloads
-5. Buka file untuk verifikasi hasil
+### 7. Download PDF
+1. Ensure all signatures are positioned correctly
+2. Click the **"Download PDF"** button
+3. The application will:
+   - Process all signatures
+   - Embed signatures into the PDF
+   - Generate a new file named `[original-name]-signed.pdf`
+4. The file will automatically download to your Downloads folder
+5. Open the file to verify the results
 
 **Note:**
-- Minimum 1 signature harus ditambahkan sebelum download
-- Processing mungkin memakan waktu untuk PDF besar
-- Signature akan permanent di PDF hasil download
+- At least 1 signature must be added before download
+- Processing may take time for large PDFs
+- Signatures will be permanent in the downloaded PDF
 
 ## Browser Support
 
-Aplikasi ini mendukung semua browser modern dengan fitur Canvas API dan File API:
+This application supports all modern browsers with Canvas API and File API features:
 
 | Browser | Version | Status | Notes |
 |---------|---------|--------|-------|
@@ -279,145 +313,145 @@ Aplikasi ini mendukung semua browser modern dengan fitur Canvas API dan File API
 - JavaScript enabled
 - Canvas API support
 - File API support
-- LocalStorage (optional, untuk future features)
+- LocalStorage (optional, for future features)
 
 ## Performance
 
 ### Optimization Features
-- **Client-side processing**: Semua operasi dilakukan di browser
+- **Client-side processing**: All operations are performed in the browser
 - **No server upload**: Privacy-friendly, no network latency
-- **PDF.js Web Workers**: Rendering PDF menggunakan Web Workers untuk performance
-- **Lazy loading**: Hanya render halaman yang sedang ditampilkan
-- **Efficient memory**: Object URLs dengan proper cleanup
-- **Optimized images**: Auto-optimization untuk uploaded signatures
+- **PDF.js Web Workers**: PDF rendering using Web Workers for performance
+- **Lazy loading**: Only render the page currently being displayed
+- **Efficient memory**: Object URLs with proper cleanup
+- **Optimized images**: Auto-optimization for uploaded signatures
 
 ### Performance Tips
-- **File Size**: Gunakan PDF < 10MB untuk performa optimal
-- **Page Count**: PDF dengan banyak halaman akan load lebih lama pada first render
-- **Zoom Level**: Lower zoom levels (50%-100%) render lebih cepat
-- **Multiple Signatures**: Tidak ada limit, tapi banyak signatures bisa mempengaruhi processing time saat download
+- **File Size**: Use PDFs < 10MB for optimal performance
+- **Page Count**: PDFs with many pages will take longer to load on first render
+- **Zoom Level**: Lower zoom levels (50%-100%) render faster
+- **Multiple Signatures**: No limit, but many signatures can affect processing time during download
 
 ## Security & Privacy
 
 ### Privacy Features
-- ✅ **100% Client-side Processing**: PDF tidak pernah diupload ke server
-- ✅ **No Data Storage**: Tidak ada data disimpan di server atau cloud
-- ✅ **No Tracking**: Tidak ada analytics atau tracking cookies
-- ✅ **Secure HTTPS**: Aplikasi menggunakan HTTPS (jika deployed dengan SSL)
-- ✅ **No External Calls**: Semua assets loaded dari local (kecuali PDF.js worker dari CDN)
+- ✅ **100% Client-side Processing**: PDFs are never uploaded to a server
+- ✅ **No Data Storage**: No data is stored on servers or cloud
+- ✅ **No Tracking**: No analytics or tracking cookies
+- ✅ **Secure HTTPS**: Application uses HTTPS (if deployed with SSL)
+- ✅ **No External Calls**: All assets loaded from local (except PDF.js worker from CDN)
 
 ### Security Measures
-- **File Validation**: Hanya accept file dengan extension `.pdf`
-- **MIME Type Check**: Validasi MIME type untuk memastikan file adalah PDF
-- **Size Limits**: Recommended max 10MB per file (bisa dikonfigurasi)
-- **XSS Protection**: React auto-escaping untuk prevent XSS attacks
-- **No Code Injection**: User input di-sanitize sebelum digunakan
+- **File Validation**: Only accepts files with `.pdf` extension
+- **MIME Type Check**: Validates MIME type to ensure file is a PDF
+- **Size Limits**: Recommended max 10MB per file (configurable)
+- **XSS Protection**: React auto-escaping to prevent XSS attacks
+- **No Code Injection**: User input is sanitized before use
 
 ### Best Practices
-1. **Jangan gunakan untuk dokumen dengan level keamanan tinggi** yang memerlukan digital certificate
-2. **Review PDF hasil** sebelum sharing ke pihak lain
-3. **Gunakan HTTPS** saat deploy untuk enkripsi in-transit
-4. **Clear browser cache** setelah menggunakan aplikasi untuk sensitive documents
+1. **Do not use for high-security documents** that require digital certificates
+2. **Review the resulting PDF** before sharing with others
+3. **Use HTTPS** when deploying for in-transit encryption
+4. **Clear browser cache** after using the application for sensitive documents
 
 ## Troubleshooting
 
-### PDF tidak muncul / Error loading PDF
+### PDF not showing / Error loading PDF
 **Possible causes:**
-- File yang diupload bukan PDF valid atau corrupt
-- PDF menggunakan enkripsi atau password protected
-- PDF menggunakan format yang tidak supported oleh PDF.js
+- Uploaded file is not a valid PDF or is corrupt
+- PDF uses encryption or is password protected
+- PDF uses a format not supported by PDF.js
 
 **Solutions:**
-1. Pastikan file adalah PDF valid (coba buka di Adobe Reader)
-2. Jika PDF password-protected, unlock terlebih dahulu
-3. Convert PDF ke format standard jika menggunakan custom encoding
-4. Cek browser console (F12) untuk error messages detail
+1. Ensure the file is a valid PDF (try opening in Adobe Reader)
+2. If PDF is password-protected, unlock it first
+3. Convert PDF to standard format if using custom encoding
+4. Check browser console (F12) for detailed error messages
 
-### Signature tidak bisa di-drag
+### Signature cannot be dragged
 **Possible causes:**
-- Browser tidak support drag functionality
-- Signature belum fully loaded
-- Conflict dengan zoom atau scroll
+- Browser does not support drag functionality
+- Signature has not fully loaded
+- Conflict with zoom or scroll
 
 **Solutions:**
-1. Pastikan signature sudah muncul sempurna di PDF
-2. Reset zoom ke 100%
-3. Refresh halaman dan coba lagi
-4. Gunakan browser yang fully supported (Chrome/Firefox)
+1. Ensure signature has appeared completely on PDF
+2. Reset zoom to 100%
+3. Refresh the page and try again
+4. Use a fully supported browser (Chrome/Firefox)
 
-### Signature tidak muncul di PDF hasil download
+### Signature does not appear in downloaded PDF
 **Possible causes:**
-- Signature position diluar bounds PDF page
-- Error saat PDF generation
+- Signature position is outside PDF page bounds
+- Error during PDF generation
 - Browser blocking download
 
 **Solutions:**
-1. Pastikan signature berada di dalam area PDF (tidak overflow)
-2. Cek browser console untuk error messages
-3. Allow downloads di browser settings
-4. Coba browser lain
+1. Ensure signature is within the PDF area (not overflowing)
+2. Check browser console for error messages
+3. Allow downloads in browser settings
+4. Try another browser
 
 ### Download error / PDF corrupt
 **Possible causes:**
-- PDF terlalu besar
-- Memory insufficient
+- PDF is too large
+- Insufficient memory
 - Browser limitations
 
 **Solutions:**
-1. Gunakan PDF dengan ukuran lebih kecil (< 10MB)
-2. Tutup tabs/aplikasi lain untuk free up memory
-3. Coba di desktop browser (bukan mobile)
-4. Clear browser cache dan coba lagi
+1. Use a smaller PDF (< 10MB)
+2. Close other tabs/applications to free up memory
+3. Try on desktop browser (not mobile)
+4. Clear browser cache and try again
 
 ### Large PDF rendering slow
 **Possible causes:**
-- PDF memiliki banyak halaman atau high resolution
-- Low-end device atau browser performance
+- PDF has many pages or high resolution
+- Low-end device or browser performance
 
 **Solutions:**
-1. Gunakan zoom level lebih rendah (50-75%)
-2. Tutup aplikasi lain untuk free up resources
-3. Gunakan pagination - navigate per halaman, bukan scroll all
-4. Consider compress PDF sebelum upload
-5. Gunakan desktop browser untuk performa lebih baik
+1. Use lower zoom level (50-75%)
+2. Close other applications to free up resources
+3. Use pagination - navigate per page, don't scroll all
+4. Consider compressing PDF before upload
+5. Use desktop browser for better performance
 
-### QR Code tidak bisa di-scan
+### QR Code cannot be scanned
 **Possible causes:**
-- QR Code terlalu kecil
-- Kontras warna tidak cukup
-- Error correction level terlalu rendah
+- QR Code is too small
+- Color contrast is insufficient
+- Error correction level is too low
 
 **Solutions:**
-1. Perbesar ukuran QR Code (minimal 150x150px)
-2. Gunakan warna kontras tinggi (hitam-putih)
-3. Pilih error correction level "M" atau "Q"
-4. Tambahkan margin putih di sekitar QR Code
-5. Test scan sebelum finalize PDF
+1. Increase QR Code size (minimum 150x150px)
+2. Use high contrast colors (black-white)
+3. Choose error correction level "M" or "Q"
+4. Add white margin around QR Code
+5. Test scan before finalizing PDF
 
-### App tidak load / Blank page
+### App not loading / Blank page
 **Possible causes:**
 - JavaScript disabled
-- Browser tidak supported
-- Network issues (PDF.js worker gagal load)
+- Browser not supported
+- Network issues (PDF.js worker failed to load)
 
 **Solutions:**
-1. Enable JavaScript di browser settings
-2. Gunakan browser modern (Chrome 90+, Firefox 88+, Safari 14+)
-3. Check internet connection (untuk load PDF.js worker dari CDN)
-4. Clear browser cache dan reload
-5. Try incognito/private mode untuk rule out extension conflicts
+1. Enable JavaScript in browser settings
+2. Use a modern browser (Chrome 90+, Firefox 88+, Safari 14+)
+3. Check internet connection (to load PDF.js worker from CDN)
+4. Clear browser cache and reload
+5. Try incognito/private mode to rule out extension conflicts
 
 ### Touch/Mobile issues
 **Possible causes:**
 - Mobile browser limitations
-- Touch events tidak properly handled
-- Screen size terlalu kecil
+- Touch events not properly handled
+- Screen size is too small
 
 **Solutions:**
-1. Gunakan landscape mode untuk screen lebih luas
-2. Zoom in untuk precision saat drag signature
-3. Consider gunakan desktop browser untuk better experience
-4. Use stylus untuk more precise control
+1. Use landscape mode for a wider screen
+2. Zoom in for precision when dragging signature
+3. Consider using desktop browser for better experience
+4. Use stylus for more precise control
 
 ## Deployment
 
@@ -465,11 +499,11 @@ docker run -p 3000:3000 e-sign-pdf
 ```
 
 ### Environment Variables
-Tidak ada environment variables yang required untuk basic deployment. Semua konfigurasi ada di code.
+No environment variables are required for basic deployment. All configuration is in the code.
 
 ## Contributing
 
-Kontribusi sangat welcome! Silakan ikuti guidelines berikut:
+Contributions are very welcome! Please follow these guidelines:
 
 ### How to Contribute
 1. **Fork** the project
@@ -479,16 +513,16 @@ Kontribusi sangat welcome! Silakan ikuti guidelines berikut:
 5. **Open** a Pull Request
 
 ### Contribution Guidelines
-- Follow existing code style dan conventions
+- Follow existing code style and conventions
 - Write clear, descriptive commit messages
-- Add comments untuk code yang complex
-- Test thoroughly sebelum submit PR
-- Update documentation jika menambah features
-- Ensure no console errors atau warnings
+- Add comments for complex code
+- Test thoroughly before submitting PR
+- Update documentation if adding features
+- Ensure no console errors or warnings
 
 ### Areas for Contribution
 - 🐛 Bug fixes
-- ✨ New features dari roadmap
+- ✨ New features from roadmap
 - 📝 Documentation improvements
 - 🎨 UI/UX enhancements
 - ♿ Accessibility improvements
@@ -497,7 +531,7 @@ Kontribusi sangat welcome! Silakan ikuti guidelines berikut:
 
 ## License
 
-MIT License - lihat [LICENSE](LICENSE) file untuk detail lengkap.
+MIT License - see [LICENSE](LICENSE) file for full details.
 
 Copyright (c) 2025 E-Sign PDF Contributors
 
@@ -511,7 +545,7 @@ Project Link: [https://github.com/shoelfikar/e-sign-pdf](https://github.com/shoe
 
 ## Acknowledgments
 
-Terima kasih kepada open-source projects yang membuat aplikasi ini possible:
+Thanks to the open-source projects that made this application possible:
 
 - **[PDF.js](https://mozilla.github.io/pdf.js/)** - Powerful PDF rendering engine by Mozilla
 - **[pdf-lib](https://pdf-lib.js.org/)** - Create and modify PDF documents in any JavaScript environment
@@ -524,29 +558,35 @@ Terima kasih kepada open-source projects yang membuat aplikasi ini possible:
 
 ## FAQ
 
-### Apakah aplikasi ini gratis?
-Ya, aplikasi ini sepenuhnya gratis dan open-source dengan MIT License.
+### Is this application free?
+Yes, this application is completely free and open-source with MIT License.
 
-### Apakah data saya aman?
-Sangat aman. Semua proses dilakukan 100% di browser Anda. Tidak ada data yang diupload ke server.
+### Do I need to create an account?
+For the demo version, you can use any email and password (minimum 6 characters) to login. In a production environment, you would integrate with a proper authentication backend.
 
-### Apakah bisa digunakan secara offline?
-Saat ini memerlukan internet untuk load PDF.js worker. Future version akan support PWA dengan offline mode.
+### Is my data safe?
+Very safe. All processing is done 100% in your browser. No data is uploaded to any server. Login credentials are stored locally only for the demo.
 
-### Apakah tanda tangan sah secara hukum?
-Aplikasi ini membuat visual signature, bukan digital certificate. Legalitas tergantung regulasi di negara Anda. Untuk dokumen legal penting, konsultasikan dengan ahli hukum.
+### Can it be used offline?
+Currently requires internet to load PDF.js worker and for initial login. Future version will support PWA with offline mode.
 
-### Apakah bisa batch signing banyak PDF sekaligus?
-Fitur ini masih dalam roadmap (Phase 3). Saat ini hanya support satu PDF per session.
+### How do I enable dark mode?
+Click the moon/sun icon in the top-right corner of the header. Your preference will be saved automatically.
 
-### Apakah ada limit ukuran file?
-Tidak ada hard limit, tapi direkomendasikan < 10MB untuk performa optimal.
+### Are the signatures legally valid?
+This application creates visual signatures, not digital certificates. Legality depends on regulations in your country. For important legal documents, consult with a legal expert.
 
-### Bagaimana cara melaporkan bug?
-Silakan buat issue di [GitHub Issues](https://github.com/shoelfikar/e-sign-pdf/issues) dengan detail lengkap.
+### Can I batch sign multiple PDFs at once?
+This feature is still in the roadmap (Phase 3). Currently only supports one PDF per session.
+
+### Is there a file size limit?
+No hard limit, but < 10MB is recommended for optimal performance.
+
+### How do I report a bug?
+Please create an issue on [GitHub Issues](https://github.com/shoelfikar/e-sign-pdf/issues) with complete details.
 
 ---
 
 **Made with ❤️ using Next.js, React & Tailwind CSS**
 
-⭐ Star project ini jika berguna untuk Anda!
+⭐ Star this project if you find it useful!

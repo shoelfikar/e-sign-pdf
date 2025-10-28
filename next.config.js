@@ -7,10 +7,6 @@ const nextConfig = {
 
     return config;
   },
-  // Eksperimental untuk App Router
-  experimental: {
-    serverActions: true,
-  },
 };
 
 export default nextConfig;
