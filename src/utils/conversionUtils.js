@@ -1,8 +1,9 @@
-import mammoth from 'mammoth';
+import { renderAsync } from 'docx-preview';
 import { Document, Packer, Paragraph, TextRun } from 'docx';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import * as pdfjsLib from 'pdfjs-dist';
+import JSZip from 'jszip';
 
 // Configure PDF.js worker
 if (typeof window !== 'undefined') {
@@ -15,104 +16,82 @@ if (typeof window !== 'undefined') {
  * @returns {Promise<Blob>} - PDF blob
  */
 export async function convertWordToPDF(wordFile) {
+  let container = null;
+  let style = null;
+
   try {
     // Read the Word file
     const arrayBuffer = await wordFile.arrayBuffer();
 
-    // Convert Word to HTML using mammoth with styling options
-    const result = await mammoth.convertToHtml({
-      arrayBuffer,
-      styleMap: [
-        "p[style-name='Heading 1'] => h1:fresh",
-        "p[style-name='Heading 2'] => h2:fresh",
-        "p[style-name='Heading 3'] => h3:fresh",
-        "p[style-name='Title'] => h1.title:fresh",
-        "r[style-name='Strong'] => strong"
-      ]
-    });
-
-    const htmlContent = result.value;
-
-    if (!htmlContent || htmlContent.trim().length === 0) {
-      throw new Error('Tidak ada konten yang dapat diekstrak dari file Word');
-    }
-
-    // Create a temporary container element
-    const container = document.createElement('div');
-    container.innerHTML = htmlContent;
+    // Create a temporary container for rendering - let docx-preview determine size
+    container = document.createElement('div');
     container.style.position = 'absolute';
     container.style.left = '-10000px';
     container.style.top = '0';
-    container.style.width = '793px'; // A4 width in pixels at 96dpi (210mm)
-    container.style.padding = '40px';
     container.style.backgroundColor = '#ffffff';
-    container.style.fontFamily = 'Arial, sans-serif';
-    container.style.fontSize = '14px';
-    container.style.lineHeight = '1.6';
-    container.style.color = '#000000';
-    container.style.boxSizing = 'border-box';
 
-    // Apply styles to content
-    const paragraphs = container.querySelectorAll('p');
-    paragraphs.forEach(p => {
-      p.style.margin = '0 0 12px 0';
-      p.style.textAlign = 'justify';
-    });
-
-    const headings1 = container.querySelectorAll('h1');
-    headings1.forEach(h => {
-      h.style.fontSize = '24px';
-      h.style.fontWeight = 'bold';
-      h.style.margin = '20px 0 12px 0';
-    });
-
-    const headings2 = container.querySelectorAll('h2');
-    headings2.forEach(h => {
-      h.style.fontSize = '20px';
-      h.style.fontWeight = 'bold';
-      h.style.margin = '18px 0 10px 0';
-    });
-
-    const headings3 = container.querySelectorAll('h3');
-    headings3.forEach(h => {
-      h.style.fontSize = '16px';
-      h.style.fontWeight = 'bold';
-      h.style.margin = '16px 0 8px 0';
-    });
-
-    const lists = container.querySelectorAll('ul, ol');
-    lists.forEach(list => {
-      list.style.margin = '10px 0';
-      list.style.paddingLeft = '30px';
-    });
-
-    const tables = container.querySelectorAll('table');
-    tables.forEach(table => {
-      table.style.borderCollapse = 'collapse';
-      table.style.width = '100%';
-      table.style.margin = '10px 0';
-
-      const cells = table.querySelectorAll('td, th');
-      cells.forEach(cell => {
-        cell.style.border = '1px solid #000';
-        cell.style.padding = '5px';
-      });
-    });
-
+    // Add CSS for proper Word document rendering - DO NOT override document size/margins
+    style = document.createElement('style');
+    style.textContent = `
+      .docx-conversion-container section.docx {
+        background: white;
+        margin-bottom: 20px;
+      }
+      .docx-conversion-container table {
+        border-collapse: collapse;
+      }
+      .docx-conversion-container img {
+        max-width: 100%;
+        height: auto;
+      }
+    `;
+    document.head.appendChild(style);
     document.body.appendChild(container);
 
-    // Create PDF using jsPDF and html2canvas
+    // Use docx-preview to render Word document with exact formatting
+    await renderAsync(arrayBuffer, container, null, {
+      className: 'docx-conversion-container',
+      inWrapper: true,
+      ignoreWidth: false,
+      ignoreHeight: false,
+      ignoreFonts: false, // Preserve exact fonts
+      breakPages: true, // Proper page breaks
+      ignoreLastRenderedPageBreak: false,
+      experimental: false,
+      trimXmlDeclaration: true,
+      useBase64URL: true, // For embedded images
+      renderChanges: false,
+      renderHeaders: true, // Render headers
+      renderFooters: true, // Render footers
+      renderFootnotes: true, // Render footnotes
+      renderEndnotes: true, // Render endnotes
+      renderComments: false, // Don't show comments in PDF
+      debug: false
+    });
+
+    // Wait for fonts and images to load completely
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // Create PDF using jsPDF and html2canvas with high quality settings
     const canvas = await html2canvas(container, {
-      scale: 2,
-      useCORS: true,
+      scale: 3, // Higher scale for better quality (increased from 2)
+      useCORS: true, // Enable CORS for images
+      allowTaint: true, // Allow cross-origin images
       logging: false,
       backgroundColor: '#ffffff',
       windowWidth: container.scrollWidth,
-      windowHeight: container.scrollHeight
+      windowHeight: container.scrollHeight,
+      letterRendering: true, // Better text rendering
+      imageTimeout: 15000, // Wait longer for images to load
+      onclone: (clonedDoc) => {
+        const clonedContainer = clonedDoc.querySelector('div');
+        if (clonedContainer) {
+          clonedContainer.style.display = 'block';
+          clonedContainer.style.position = 'relative';
+          clonedContainer.style.left = '0';
+        }
+      }
     });
-
-    // Remove container
-    document.body.removeChild(container);
 
     // Calculate PDF dimensions
     const imgWidth = 210; // A4 width in mm
@@ -122,20 +101,26 @@ export async function convertWordToPDF(wordFile) {
     const pdf = new jsPDF({
       orientation: 'portrait',
       unit: 'mm',
-      format: 'a4'
+      format: 'a4',
+      compress: true
     });
 
     let heightLeft = imgHeight;
     let position = 0;
 
+    // Convert canvas to image data (using PNG for better quality)
+    const imgData = canvas.toDataURL('image/png');
+
     // Add first page
     pdf.addImage(
-      canvas.toDataURL('image/jpeg', 0.95),
-      'JPEG',
+      imgData,
+      'PNG',
       0,
       position,
       imgWidth,
-      imgHeight
+      imgHeight,
+      undefined,
+      'FAST'
     );
     heightLeft -= pageHeight;
 
@@ -144,12 +129,14 @@ export async function convertWordToPDF(wordFile) {
       position = heightLeft - imgHeight;
       pdf.addPage();
       pdf.addImage(
-        canvas.toDataURL('image/jpeg', 0.95),
-        'JPEG',
+        imgData,
+        'PNG',
         0,
         position,
         imgWidth,
-        imgHeight
+        imgHeight,
+        undefined,
+        'FAST'
       );
       heightLeft -= pageHeight;
     }
@@ -160,6 +147,14 @@ export async function convertWordToPDF(wordFile) {
   } catch (error) {
     console.error('Error converting Word to PDF:', error);
     throw new Error('Gagal mengkonversi Word ke PDF: ' + error.message);
+  } finally {
+    // Clean up DOM elements
+    if (container && container.parentNode) {
+      document.body.removeChild(container);
+    }
+    if (style && style.parentNode) {
+      document.head.removeChild(style);
+    }
   }
 }
 
@@ -319,4 +314,85 @@ export function validateFileType(file, expectedType) {
   }
 
   return false;
+}
+
+/**
+ * Get page size from Word document
+ * @param {File} wordFile - The Word file to analyze
+ * @returns {Promise<Object>} - Page size information
+ */
+export async function getDocxPageSize(wordFile) {
+  try {
+    const arrayBuffer = await wordFile.arrayBuffer();
+    const zip = await JSZip.loadAsync(arrayBuffer);
+
+    // Read document.xml which contains page settings
+    const documentXml = await zip.file('word/document.xml').async('string');
+
+    // Parse XML to get page size
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(documentXml, 'text/xml');
+
+    // Find w:pgSz element (page size)
+    const pgSz = xmlDoc.getElementsByTagName('w:pgSz')[0];
+
+    if (pgSz) {
+      // Get width and height in twips (1/1440 inch)
+      const widthTwips = parseInt(pgSz.getAttribute('w:w') || '12240'); // Default A4 width
+      const heightTwips = parseInt(pgSz.getAttribute('w:h') || '15840'); // Default A4 height
+
+      // Convert twips to different units
+      const TWIPS_PER_INCH = 1440;
+      const MM_PER_INCH = 25.4;
+      const PIXELS_PER_INCH = 96; // Standard screen DPI
+
+      const widthInches = widthTwips / TWIPS_PER_INCH;
+      const heightInches = heightTwips / TWIPS_PER_INCH;
+
+      const widthMm = widthInches * MM_PER_INCH;
+      const heightMm = heightInches * MM_PER_INCH;
+
+      const widthPx = widthInches * PIXELS_PER_INCH;
+      const heightPx = heightInches * PIXELS_PER_INCH;
+
+      // Detect common paper sizes
+      let paperSize = 'Custom';
+      if (Math.abs(widthMm - 210) < 5 && Math.abs(heightMm - 297) < 5) {
+        paperSize = 'A4 Portrait';
+      } else if (Math.abs(widthMm - 297) < 5 && Math.abs(heightMm - 210) < 5) {
+        paperSize = 'A4 Landscape';
+      } else if (Math.abs(widthMm - 215.9) < 5 && Math.abs(heightMm - 279.4) < 5) {
+        paperSize = 'Letter Portrait';
+      } else if (Math.abs(widthMm - 279.4) < 5 && Math.abs(heightMm - 215.9) < 5) {
+        paperSize = 'Letter Landscape';
+      }
+
+      return {
+        twips: { width: widthTwips, height: heightTwips },
+        inches: { width: widthInches, height: heightInches },
+        mm: { width: widthMm, height: heightMm },
+        pixels: { width: Math.round(widthPx), height: Math.round(heightPx) },
+        paperSize: paperSize
+      };
+    }
+
+    // Default A4 size if not found
+    return {
+      twips: { width: 12240, height: 15840 },
+      inches: { width: 8.5, height: 11.69 },
+      mm: { width: 210, height: 297 },
+      pixels: { width: 794, height: 1123 },
+      paperSize: 'A4 Portrait (Default)'
+    };
+  } catch (error) {
+    console.error('Error getting page size:', error);
+    // Return default A4 size on error
+    return {
+      twips: { width: 12240, height: 15840 },
+      inches: { width: 8.5, height: 11.69 },
+      mm: { width: 210, height: 297 },
+      pixels: { width: 794, height: 1123 },
+      paperSize: 'A4 Portrait (Default)'
+    };
+  }
 }
